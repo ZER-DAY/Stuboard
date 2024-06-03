@@ -1,8 +1,11 @@
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
 const mysql = require('mysql');
+const express = require('express');
+const bodyParser = require('body-parser');
+const path = require('path');
+
 const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -12,8 +15,6 @@ const connection = mysql.createConnection({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME
 });
-
-
 connection.connect(error => {
     if (error) {
         console.error('Error connecting to the database:', error);
